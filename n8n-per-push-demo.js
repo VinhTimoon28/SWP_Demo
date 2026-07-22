@@ -2,5 +2,6 @@
 export const perPushDemoMarker = () => ({
   source: 'SEAL Hackathon demo',
   triggeredAt: '2026-07-23',
-  workflow: 'github-webhook-to-n8n'
+  workflow: 'github-webhook-to-n8n',
+  verification: 'public-callback-ready'
 });
