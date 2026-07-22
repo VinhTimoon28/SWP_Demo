@@ -1,5 +1,26 @@
 // DOM Elements
 document.addEventListener('DOMContentLoaded', function() {
+    // Lightweight client-side session guard for protected demo actions.
+    // A production application must validate the session again on the server.
+    const authSessionKey = 'schoolhealth.authenticated';
+    const requireAuthenticated = (action) => {
+        if (sessionStorage.getItem(authSessionKey) === 'true') return true;
+
+        console.warn(`Authentication is required to ${action}.`);
+        alert('Please sign in before continuing.');
+        return false;
+    };
+
+    window.SchoolHealthAuth = {
+        signIn() {
+            sessionStorage.setItem(authSessionKey, 'true');
+        },
+        signOut() {
+            sessionStorage.removeItem(authSessionKey);
+        },
+        requireAuthenticated
+    };
+
     // School Types Slider
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
@@ -51,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     demoButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
+            if (!requireAuthenticated('schedule a demo')) return;
             alert('Thank you for your interest! A member of our team will contact you shortly to schedule a demo.');
         });
     });
