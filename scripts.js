@@ -4,7 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // A production application must validate the session again on the server.
     const authSessionKey = 'schoolhealth.authenticated';
     const requireAuthenticated = (action) => {
-        if (sessionStorage.getItem(authSessionKey) === 'true') return true;
+        if (sessionStorage.getItem(authSessionKey) === 'true') {
+            sessionStorage.setItem('schoolhealth.lastAuthenticatedAction', action);
+            return true;
+        }
 
         console.warn(`Authentication is required to ${action}.`);
         alert('Please sign in before continuing.');
