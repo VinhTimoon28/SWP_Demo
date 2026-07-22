@@ -17,9 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     window.SchoolHealthAuth = {
         signIn() {
             sessionStorage.setItem(authSessionKey, 'true');
+            sessionStorage.setItem('schoolhealth.authenticatedAt', new Date().toISOString());
         },
         signOut() {
             sessionStorage.removeItem(authSessionKey);
+            sessionStorage.removeItem('schoolhealth.authenticatedAt');
+            sessionStorage.removeItem('schoolhealth.lastAuthenticatedAction');
         },
         requireAuthenticated
     };
